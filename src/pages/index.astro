@@ -1,0 +1,44 @@
+---
+// ====================================
+// Import
+// ====================================
+// Config
+import { SITE } from "../config";
+
+// Layout
+import Layout from "../layouts/Layout.astro";
+
+// Component
+import ButtonPrimary from "../components/ButtonPrimary.astro";
+import Card from "../components/Card.astro";
+
+// 画像最適化
+import { Image, Picture } from "astro:assets";
+
+// 画像の読み込み
+import photoIke from "../assets/images/ike.jpg";
+import photoHana from "../assets/images/hana.jpg";
+
+const pageTitle = "Astro-main";
+---
+
+<Layout title={`${SITE.name}`} description="アストロサイトです">
+  <main>
+    <!-- test -->
+    <div class="test"></div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  @charset 'UTF-8';
+  @use "sass:math";
+  @use "../assets/scss/inc" as *;
+
+  .test {
+    padding: 300px 0;
+  }
+</style>
+
+<script>
+  // console.log("test");
+</script>

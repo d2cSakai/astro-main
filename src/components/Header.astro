@@ -1,0 +1,179 @@
+---
+import { SITE, COMPANY } from "../config";
+import ButtonHamburger from "./ButtonHamburger.astro";
+// import GlobalNavLink from "./GlobalNavLink.astro";
+
+// 画像最適化
+import { Image, Picture } from "astro:assets";
+
+// image
+import logo from "../assets/images/common/logo.png";
+
+// オブジェクト型定義
+interface navLists {
+  name: string;
+  url?: string;
+}
+
+const navLists: navLists[] = [
+  {
+    name: "Home",
+    url: "/",
+  },
+  {
+    name: "About",
+    url: "/about",
+  },
+  {
+    name: "Works",
+    url: "/works",
+  },
+  {
+    name: "Cotnact",
+    url: "/contact",
+  },
+];
+---
+
+<header class="header">
+  <div class="header__inner">
+    <h1 class="header__title">
+      <a href="/" class="logo">
+        <Image src={logo} alt="テストロゴのaltです。" loading="eager" />
+      </a>
+    </h1>
+
+    <nav class="header__nav">
+      <ButtonHamburger />
+      <div id="globalNav" class="globalNav">
+        <ul class="globalNav__list">
+          {
+            navLists.map((item) => (
+              <li class="globalNav__item">
+                <a class="globalNav__link" href={item.url}>
+                  {item.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </nav>
+
+    <!-- /.p-header__inner -->
+  </div>
+</header>
+
+<style lang="scss">
+  @charset 'UTF-8';
+  @use "sass:math";
+  @use "../assets/scss/inc" as *;
+
+  .header {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    &__inner {
+      padding: 16px;
+      @include mq(md) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .logo {
+      width: 100%;
+      max-width: 160px;
+      display: block;
+
+      @include mq(md) {
+        max-width: 180px;
+      }
+    }
+  }
+
+  .globalNav {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    padding: 3em 0 0;
+    transform: translateX(110%);
+    transition: transform 0.3s ease-in-out;
+    background-color: #fff;
+
+    @include mq(md) {
+      position: static;
+      width: 100%;
+      height: auto;
+      padding: 0;
+      // overflow: hidden;
+      transform: translateX(0);
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    &__list {
+      @include mq(md) {
+        display: flex;
+      }
+      > * + * {
+        @include mq(md) {
+          margin-left: 16px;
+        }
+      }
+    }
+    &__item {
+      display: block;
+    }
+
+    &__link {
+      text-decoration: none;
+      color: $primary-text-color;
+      font-size: pxToRem(16);
+      font-weight: 700;
+      @include mq(md) {
+        font-size: pxToRem(18);
+        padding: 0.25rem 0;
+        margin: 0 1rem;
+        position: relative;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: 2;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        transform: scale(0, 1);
+        transform-origin: right top;
+        transition: transform 0.3s ease-in-out;
+        background-color: $primary-text-color;
+      }
+
+      &:hover,
+      &:focus {
+        color: inherit;
+        &::after {
+          transform: scale(1, 1);
+          transform-origin: left top;
+        }
+      }
+    }
+  }
+
+  body.is-drawerActive .globalNav {
+    transform: translateX(0);
+  }
+</style>

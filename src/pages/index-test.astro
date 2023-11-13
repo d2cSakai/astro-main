@@ -1,0 +1,79 @@
+---
+// ====================================
+// Import
+// ====================================
+// Config
+import { SITE } from "../config";
+
+// Layout
+import Layout from "../layouts/Layout.astro";
+
+// Component
+import ButtonPrimary from "../components/ButtonPrimary.astro";
+import Card from "../components/Card.astro";
+
+// 画像最適化
+import { Image, Picture } from "astro:assets";
+
+// 画像の読み込み
+import photoIke from "../assets/images/ike.jpg";
+import photoHana from "../assets/images/hana.jpg";
+
+// WP
+const res = await fetch("https://shibajuku.net/wp-json/wp/v2/posts");
+const posts = await res.json();
+
+const pageTitle = "Takuma";
+---
+
+<Layout title={`${SITE.name}`} description="アストロサイトです">
+  <main>
+    <p class="lead">aaaa</p>
+    <div class="hero">
+      <h1>{pageTitle}</h1>
+      <!-- pictureの場合 -->
+      <Picture src={photoHana} width={300} alt="花の画像です。" />
+      <!-- imageの場合 -->
+      <figure>
+        <Image src={photoIke} widths={[240, 540, 720, photoIke.width]} alt="test" />
+      </figure>
+    </div>
+
+    {posts.map((post: any) => <Card href={post.link} title={post.title.rendered} text={post.excerpt.rendered} src="" />)}
+
+    <ButtonPrimary href="/about/" accent="" data-text="aaa">
+      <span>アバウト</span>
+    </ButtonPrimary>
+
+    <p>
+      <ButtonPrimary href="/blogs/" accent="">
+        <em>ブログへ</em>
+      </ButtonPrimary>
+    </p>
+
+    <p>
+      <ButtonPrimary href="" accent="true">テスト</ButtonPrimary>
+    </p>
+
+    <ButtonPrimary href="/about/" accent="">aaa</ButtonPrimary>
+  </main>
+</Layout>
+
+<style lang="scss">
+  @charset 'UTF-8';
+  @use "sass:math";
+  @use "../assets/scss/inc" as *;
+  $main-color: gray;
+
+  h1 {
+    color: $main-color;
+  }
+  .lead {
+    color: aliceblue;
+    font-size: pxToRem(60);
+  }
+</style>
+
+<script>
+  console.log("test");
+</script>

@@ -1,0 +1,12 @@
+---
+// 画像最適化
+import { Image } from "astro:assets";
+
+import Layout from "../layouts/Layout.astro";
+import logo from "../assets/images/astro-logo-dark.png";
+import ike from "../assets/images/ike.jpg";
+---
+
+<Layout title="About" description="これはアバウトページです。">
+  <Image src={logo} width="300" alt="test" />
+</Layout>
